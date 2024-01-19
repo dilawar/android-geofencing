@@ -1,5 +1,6 @@
 package com.eebax.geofencing;
 
+import android.annotation.SuppressLint;
 import android.app.PendingIntent;
 import android.content.Context;
 import android.content.ContextWrapper;
@@ -21,17 +22,17 @@ public class GeofenceHelper extends ContextWrapper {
     }
 
     public GeofencingRequest getGeofencingRequest(Geofence geofence) {
-
-        return new GeofencingRequest.Builder().addGeofence(geofence).setInitialTrigger(
-                GeofencingRequest.INITIAL_TRIGGER_ENTER).build();
+        return new GeofencingRequest.Builder()
+                .addGeofence(geofence)
+                .setInitialTrigger(GeofencingRequest.INITIAL_TRIGGER_ENTER)
+                .build();
     }
 
+    @SuppressLint("VisibleForTests")
     public Geofence getGeofence(String ID, LatLng latLng, float radius, int transitionTypes) {
         return new Geofence.Builder()
-                .setCircularRegion(latLng.latitude,
-                        latLng.longitude,
-                        radius
-                ).setRequestId(ID)
+                .setCircularRegion(latLng.latitude, latLng.longitude, radius)
+                .setRequestId(ID)
                 .setTransitionTypes(transitionTypes)
                 .setLoiteringDelay(5000)
                 .setExpirationDuration(Geofence.NEVER_EXPIRE)
