@@ -7,6 +7,7 @@ android {
 
     defaultConfig {
         applicationId "com.eebax.geofencing"
+        namespace 'com.eebax.geofencing'
         minSdk 21
         targetSdk 32
         versionCode 1

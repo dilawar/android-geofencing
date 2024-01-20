@@ -1,5 +1,6 @@
 package com.eebax.geofencing;
 
+import android.annotation.SuppressLint;
 import android.app.PendingIntent;
 import android.content.Context;
 import android.content.ContextWrapper;
@@ -20,24 +21,36 @@ public class GeofenceHelper extends ContextWrapper {
         super(base);
     }
 
-    public GeofencingRequest getGeofencingRequest(Geofence geofence){
-
-        return new GeofencingRequest.Builder().addGeofence(geofence).setInitialTrigger(GeofencingRequest.INITIAL_TRIGGER_ENTER).build();
+    public GeofencingRequest getGeofencingRequest(Geofence geofence) {
+        return new GeofencingRequest.Builder()
+                .addGeofence(geofence)
+                .setInitialTrigger(GeofencingRequest.INITIAL_TRIGGER_ENTER)
+                .build();
     }
 
-    public Geofence getGeofence(String ID, LatLng latLng, float radius, int transitionTypes){
-
-        return new Geofence.Builder().setCircularRegion(latLng.latitude, latLng.longitude, radius).setRequestId(ID).setTransitionTypes(transitionTypes).setLoiteringDelay(5000).setExpirationDuration(Geofence.NEVER_EXPIRE).build();
+    @SuppressLint("VisibleForTests")
+    public Geofence getGeofence(String ID, LatLng latLng, float radius, int transitionTypes) {
+        return new Geofence.Builder()
+                .setCircularRegion(latLng.latitude, latLng.longitude, radius)
+                .setRequestId(ID)
+                .setTransitionTypes(transitionTypes)
+                .setLoiteringDelay(5000)
+                .setExpirationDuration(Geofence.NEVER_EXPIRE)
+                .build();
     }
 
     public PendingIntent getPendingIntent() {
 
-        if (pendingIntent != null){
+        if (pendingIntent != null) {
             return pendingIntent;
         }
 
         Intent intent = new Intent(this, GeofenceBroadcastReceiver.class);
-        pendingIntent = PendingIntent.getBroadcast(this, 2607, intent, PendingIntent.FLAG_UPDATE_CURRENT);
+        pendingIntent = PendingIntent.getBroadcast(this,
+                2607,
+                intent,
+                PendingIntent.FLAG_UPDATE_CURRENT
+        );
 
         return pendingIntent;
     }
@@ -59,5 +72,4 @@ public class GeofenceHelper extends ContextWrapper {
         }
         return e.getLocalizedMessage();
     }
-
 }
